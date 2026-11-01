@@ -12,6 +12,7 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '127.0.0.1';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 const SESSION_TOKEN = 'VALID_ADMIN_SESSION_TOKEN_999';
 const SESSION_TTL_MS = 24 * 60 * 60 * 1000;
@@ -570,8 +571,8 @@ setInterval(() => {
   }
 }, 60 * 1000);
 
-server.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+server.listen(PORT, HOST, () => {
+  console.log(`Server listening on ${HOST}:${PORT}`);
 });
 
 function normalizeReelEntries(reelEntries) {

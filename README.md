@@ -100,14 +100,17 @@ npm start
 
 ## ⚙️ 環境変数の設定 (オプション)
 
-ポート番号や管理者パスワードを変更する場合は、環境変数を設定して起動します。
+待受アドレス、ポート番号、管理者パスワードは環境変数で設定できます。`HOST` を省略した場合は `127.0.0.1` で待ち受けるため、サーバーを実行している端末からのみアクセスできます。他の端末からアクセスする場合は、`HOST` に `0.0.0.0` を指定して全ネットワークインターフェースで待ち受け、アクセス先にはサーバー端末のIPアドレスを使用してください。必要に応じてファイアウォールでポートへの接続を許可してください。
 
 ```bash
-# 例: Linux / macOS
-PORT=8080 ADMIN_PASSWORD="YourSecurePassword" npm start
+# 例: Linux / macOS（全アドレスで待ち受け、ポート8080を使用）
+HOST=0.0.0.0 PORT=8080 ADMIN_PASSWORD="YourSecurePassword" npm start
 
-# 例: Windows (PowerShell)
-$env:PORT="8080"; $env:ADMIN_PASSWORD="YourSecurePassword"; npm start
+# 例: Windows（PowerShell、全アドレスで待ち受け）
+$env:HOST="0.0.0.0"; $env:PORT="8080"; $env:ADMIN_PASSWORD="YourSecurePassword"; npm start
+
+# 例: Windows（PowerShell、既定の127.0.0.1で待ち受け）
+$env:HOST="127.0.0.1"; npm start
 
 ```
 
