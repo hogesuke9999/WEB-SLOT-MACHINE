@@ -53,7 +53,7 @@ slot-machine/
 
 ## 🚀 動作環境・動作要件
 
-* **Node.js**: v18.0.0 以上推奨
+* **Node.js**: v20.17.0 以上
 * **npm**: v9.0.0 以上推奨
 * **対応ブラウザ**:
 * Google Chrome, Apple Safari, Microsoft Edge, Mozilla Firefox (最新版)
@@ -81,7 +81,7 @@ npm start
 
 ```
 
-起動後、コンソールに `Server running on http://localhost:3000` と表示されれば完了です。
+起動後、コンソールに `Server listening on 127.0.0.1:3000` と表示されれば完了です。
 
 ### 3. ブラウザでアクセス
 
