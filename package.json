@@ -1,0 +1,16 @@
+{
+  "name": "slot-machine",
+  "version": "1.0.0",
+  "description": "Multi-device WEB Slot Machine with Node.js, Socket.io, and SQLite",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2",
+    "qrcode": "^1.5.3",
+    "socket.io": "^4.7.5",
+    "sqlite3": "^5.1.7"
+  }
+}

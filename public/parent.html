@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スロットマシン - 親画面（管理・操作）</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/parent.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>スロットマシン 管理パネル</h1>
+      <div id="statusInfo">
+        <span id="childCount">接続端末: 0台</span>
+        <span id="currentSessionBadge" style="display:none; margin-left:15px; color:#00ffff; font-weight:bold;">ID: --</span>
+        <button id="btnLogout" style="display:none; margin-left:15px; padding:5px 10px; background:#666; color:#fff;">ログアウト</button>
+      </div>
+    </header>
+
+    <div id="sessionRegisterSection" class="auth-box">
+      <h2>親セッション登録</h2>
+      <input type="text" id="parentNameInput" placeholder="名前（任意）">
+      <label for="reelCountInput" style="display:block; margin-top:12px; text-align:left; color:#aaa;">リール数</label>
+      <select id="reelCountInput" style="width:100%; padding:10px; margin-top:6px; border-radius:6px; border:1px solid #444; background:#2a2a2a; color:#fff;">
+        <option value="1">1個</option>
+        <option value="2">2個</option>
+        <option value="3" selected>3個</option>
+      </select>
+      <button id="btnRegisterParent" style="margin-top:16px;">登録してIDを発行</button>
+      <p id="registerError" style="color:#ff4d4d; margin-top:10px; display:none;"></p>
+      <div id="sessionInfoBox" style="display:none; margin-top:18px; padding:12px; background:#1a1a1a; border:1px solid #333; border-radius:8px;">
+        <p style="margin:0 0 6px; color:#aaa;">発行された4桁ID</p>
+        <div id="sessionIdDisplay" style="font-size:2rem; font-weight:bold; color:#00ffff; letter-spacing:0.2em;">----</div>
+        <small id="sessionExpiryText" style="display:block; margin-top:8px; color:#ddd;">有効期限: --</small>
+      </div>
+    </div>
+
+    <div id="authSection" class="auth-box" style="display:none; margin-top:20px;">
+      <h2>管理者ログイン</h2>
+      <input type="password" id="passwordInput" placeholder="パスワードを入力">
+      <button id="btnLogin">ログイン</button>
+      <p id="loginError" style="color:#ff4d4d; margin-top:10px; display:none;"></p>
+    </div>
+
+    <div id="mainSection" style="display: none;">
+      <div class="qr-section">
+        <img id="qrCodeImg" src="" alt="QR Code">
+        <div>
+          <h3>子画面の接続情報</h3>
+          <p id="childUrlText" style="color:#1d4ed8; word-break:break-all;"></p>
+          <small>子画面では名前と4桁IDを入力します。QRコードから開くとIDが自動入力されます。</small>
+        </div>
+      </div>
+
+      <section class="join-requests-panel">
+        <h3>子画面の接続状況</h3>
+        <p>表示名は本人確認には使えません。相手を確認してから承認してください。</p>
+        <h4>承認待ち</h4>
+        <p id="joinRequestsEmpty">接続リクエストはありません。</p>
+        <ul id="joinRequestsList" class="join-requests-list"></ul>
+        <h4>承認済み</h4>
+        <p id="connectedChildrenEmpty">接続中の子画面はありません。</p>
+        <ul id="connectedChildrenList" class="connected-children-list"></ul>
+      </section>
+
+      <div class="control-panel">
+        <h3>スロットプレビュー</h3>
+        <div class="slot-preview-container">
+          <div class="preview-reel-window" id="window0">
+            <div class="preview-reel-strip" id="strip0"></div>
+          </div>
+          <div class="preview-reel-window" id="window1">
+            <div class="preview-reel-strip" id="strip1"></div>
+          </div>
+          <div class="preview-reel-window" id="window2">
+            <div class="preview-reel-strip" id="strip2"></div>
+          </div>
+        </div>
+
+        <button id="btnStart" class="btn-start">スタート (一括回転)</button>
+        <div class="stop-buttons">
+          <button id="btnStop0" class="btn-stop" disabled>1つ目 ストップ</button>
+          <button id="btnStop1" class="btn-stop" disabled>2つ目 ストップ</button>
+          <button id="btnStop2" class="btn-stop" disabled>3つ目 ストップ</button>
+        </div>
+      </div>
+
+      <div class="settings-panel">
+        <h3>確率設定エディタ</h3>
+        <div style="margin-top:12px; padding:12px; background:#111; border-radius:8px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <strong>確率設定（合計100%）</strong>
+          </div>
+          <div style="margin-bottom:10px; color:#aaa; font-size:0.9rem;">各行: 項目名 + 割合（%）を横に並べて入力</div>
+          <div id="weightEditor" style="display:grid; gap:8px;"></div>
+        </div>
+
+        <button id="btnApplySettings" style="padding:10px 20px; background:#007bff; color:#fff; margin-top:16px;">設定を適用＆配信</button>
+      </div>
+
+      <div class="history-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h3>当選履歴</h3>
+          <a href="/api/history/csv" target="_blank" style="color:#00ffff; text-decoration:none;">CSVダウンロード</a>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>日時</th>
+              <th data-reel-index="0">1つ目の結果</th>
+              <th data-reel-index="1">2つ目の結果</th>
+              <th data-reel-index="2">3つ目の結果</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/parent.js"></script>
+</body>
+</html>

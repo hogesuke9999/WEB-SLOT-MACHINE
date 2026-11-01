@@ -1,0 +1,43 @@
+:root {
+  --bg: #fff4f7;
+  --panel: #ffe9f0;
+  --panel-strong: #ffd6e5;
+  --panel-border: #f7bfd3;
+  --text: #5d2f3f;
+  --text-soft: #7a5665;
+  --accent: #f7a9c4;
+  --accent-strong: #ee7aa8;
+  --button-text: #fffafc;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+}
+
+body {
+  background: linear-gradient(180deg, #fff7fa 0%, #ffe9f2 100%);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  background: var(--accent);
+  color: var(--button-text);
+}
+
+button:hover:not(:disabled) {
+  filter: brightness(0.98);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

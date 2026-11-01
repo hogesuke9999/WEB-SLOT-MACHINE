@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スロットマシン - ディスプレイ</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/child.css">
+  <!-- 紙吹雪アニメーション用ライブラリ -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <!-- 接続ID入力フォーム -->
+  <div id="sessionForm" class="overlay" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+    <h1>スロット画面に接続</h1>
+    <p>名前と親画面に表示された4桁IDを入力してください。</p>
+    <label for="childNameInput">表示する名前</label>
+    <input id="childNameInput" type="text" maxlength="40" autocomplete="name" placeholder="名前">
+    <label for="sessionIdInput">接続ID</label>
+    <input id="sessionIdInput" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="one-time-code" placeholder="例: 1234">
+    <button id="btnJoinSession">接続をリクエスト</button>
+    <p id="sessionError" role="status" aria-live="polite"></p>
+  </div>
+
+  <!-- スロットディスプレイ -->
+  <div id="slotDisplay" style="display:none;">
+    <div id="parentNameBadge" class="parent-name-badge" hidden></div>
+    <div id="audioOverlay" class="overlay">
+      <h1>画面をタップして開始</h1>
+      <p>（音声を有効化します）</p>
+    </div>
+
+    <div class="slot-container">
+      <div class="reel-window" id="window0">
+        <div class="reel-strip" id="strip0"></div>
+      </div>
+      <div class="reel-window" id="window1">
+        <div class="reel-strip" id="strip1"></div>
+      </div>
+      <div class="reel-window" id="window2">
+        <div class="reel-strip" id="strip2"></div>
+      </div>
+    </div>
+
+    <div id="resultModal" class="result-modal">
+      <div class="result-content">
+        <div class="result-title">WINNER!</div>
+        <div id="resultText" class="result-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/child.js"></script>
+</body>
+</html>
